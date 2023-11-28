@@ -63,15 +63,14 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/properties/:id" element={<PropertiesShow />} />
-            <Route path="/property/new" element={<PropertyNew />} />
-            {/* <Route
+            <Route
               path="/property/new"
               element={
                 <PrivateRoute>
                   <PropertyNew />
                 </PrivateRoute>
               }
-            /> */}
+            />
             <Route
               path="/profile"
               element={
