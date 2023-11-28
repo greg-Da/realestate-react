@@ -36,18 +36,18 @@ export default function New() {
   }
 
   function handleFileUpload(e) {
-    setImages((prev) => [...prev, e.target.files[0]]);
+    setImages((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
   }
 
   return (
     <div className="p-6 w-full m-auto xl:w-2/3">
       <h1 className="font-bold text-3xl text-center">Add your property</h1>
 
-      <div className="my-5 flex">
+      <div className="my-5 grid grid-cols-2 md:grid-cols-5 gap-4">
         {images.map((image, index) => (
-          <img key={index} src={image} />
+          <img className="w-auto h-auto " key={index} src={image} />
         ))}
-        {images.length <= 5 ? <FileInput uploadFile={handleFileUpload} /> : ""}
+        {images.length < 5 ? <FileInput uploadFile={handleFileUpload} /> : ""}
       </div>
 
       <div>
