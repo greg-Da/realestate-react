@@ -9,6 +9,8 @@ import { AlertContext } from "../components/Alert";
 import { logIn } from "../state/auth/authSlice";
 
 export default function Register() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
@@ -20,6 +22,8 @@ export default function Register() {
   function handleSubmit() {
     const data = {
       user: {
+        firstName,
+        lastName,
         email,
         password,
         password_confirmation,
@@ -63,6 +67,20 @@ export default function Register() {
           <form className="grid gap-y-5">
             <input
               className="rounded-full border p-2 outline-none"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              type="text"
+              placeholder="Enter your fist name"
+            />
+            <input
+              className="rounded-full border p-2 outline-none"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              type="text"
+              placeholder="Enter your last name"
+            />
+            <input
+              className="rounded-full border p-2 outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
@@ -85,7 +103,7 @@ export default function Register() {
             <div className="flex justify-center">
               <Button
                 disabled={`${
-                  email && password && password_confirmation ? "" : "disabled"
+                  email && password && password_confirmation && firstName && lastName ? "" : "disabled"
                 }`}
                 onClick={() => handleSubmit()}
                 variant="contained"
