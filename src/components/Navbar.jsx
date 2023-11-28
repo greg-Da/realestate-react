@@ -64,6 +64,8 @@ export default function Navbar({ mode, onSwitchChange }) {
 
   const handleLogout = async (e) => {
     await handleCloseProfile(e);
+    setUnfolded(false)
+    
     dispatch(logOut());
 
     navigate("/");
@@ -250,7 +252,7 @@ export default function Navbar({ mode, onSwitchChange }) {
           {cities.map((name, id) => {
             return (
               <div key={id} className="flex justify-center">
-                <Link  to={`/city/${name}`}>
+                <Link onClick={() => setUnfolded(false)} to={`/city/${name}`}>
                   {name}
                 </Link>
               </div>
@@ -258,18 +260,18 @@ export default function Navbar({ mode, onSwitchChange }) {
           })}
         </div>
 
-        {true ? (
+        {checkAuth() ? (
           <>
-            <Link to={"/profile"}>Profile</Link>
-            <Link to={"/property/new"}>Add your property</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/profile"}>Profile</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/property/new"}>Add your property</Link>
             <Link onClick={(e) => handleLogout(e)}>Log Out</Link>
           </>
         ) : (
           <>
-            <Link className="my-2" to={"/login"}>
+            <Link className="my-2" onClick={() => setUnfolded(false)} to={"/login"}>
               Sign In
             </Link>
-            <Link to={"/register"}>Sign Up</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/register"}>Sign Up</Link>
           </>
         )}
       </div>
