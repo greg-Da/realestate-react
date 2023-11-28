@@ -23,23 +23,49 @@ export default function Navbar({ mode, onSwitchChange }) {
   let dispatch = useDispatch();
 
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [cityDropdown, setCityDropdown] = useState(false);
   const [unfolded, setUnfolded] = useState(false);
-  const anchorRef = useRef(null);
+  const profileRef = useRef(null);
+  const citiesRef = useRef(null);
 
-  const handleToggle = () => {
+  const cities = [
+    "Paris",
+    "Nice",
+    "Toulouse",
+    "Bordeaux",
+    "Marseille",
+    "Nantes",
+    "Lyon",
+  ];
+
+  const handleToggleProfile = () => {
     setOpenDropdown((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleToggleCity = () => {
+    setCityDropdown((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseProfile = (event) => {
+    if (profileRef.current && profileRef.current.contains(event.target)) {
       return;
     }
 
     setOpenDropdown(false);
   };
 
+  const handleCloseCity = (event) => {
+    if (citiesRef.current && citiesRef.current.contains(event.target)) {
+      return;
+    }
+
+    setCityDropdown(false);
+  };
+
   const handleLogout = async (e) => {
-    await handleClose(e);
+    await handleCloseProfile(e);
+    setUnfolded(false)
+    
     dispatch(logOut());
 
     navigate("/");
@@ -49,14 +75,14 @@ export default function Navbar({ mode, onSwitchChange }) {
   const prevOpen = useRef(openDropdown);
   useEffect(() => {
     if (prevOpen.current === true && openDropdown === false) {
-      anchorRef.current.focus();
+      profileRef.current.focus();
     }
 
     prevOpen.current = openDropdown;
   }, [openDropdown]);
 
   return (
-    <nav className="absolute z-50 top-0 w-full min-h-[5vh] bg-black text-white p-2 shadow-lg border-b-2 border-black">
+    <nav className="absolute z-50 top-0 w-full min-h-[7vh] bg-black text-white p-2 shadow-lg border-b-2 border-black">
       <div className="flex justify-between">
         <div>
           <Link className="font-bold text-3xl" to={"/"}>
@@ -68,32 +94,87 @@ export default function Navbar({ mode, onSwitchChange }) {
           {mode === true ? (
             <i
               onClick={() => onSwitchChange(!mode)}
-              className="my-auto mr-2 text-xl fa-solid fa-sun"
+              className="my-auto mr-5 text-xl fa-solid fa-sun"
             ></i>
           ) : (
             <i
               onClick={() => onSwitchChange(!mode)}
-              className="my-auto mr-2 text-xl fa-solid fa-moon"
+              className="my-auto mr-5 text-xl fa-solid fa-moon"
             ></i>
           )}
 
-          <div className="hidden md:block mt-[0.4em]">
+          <div className="hidden md:flex mt-[0.4em]">
+            <Stack
+              className="mr-5 my-auto cursor-pointer"
+              direction="row"
+              spacing={2}
+            >
+              <div
+                ref={citiesRef}
+                id="composition-button"
+                aria-controls={openDropdown ? "composition-menu" : undefined}
+                aria-expanded={openDropdown ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleToggleCity}
+              >
+                <p>
+                  Our cities <i className="fa-solid fa-caret-down"></i>
+                </p>
+              </div>
+              <Popper
+                open={cityDropdown}
+                anchorEl={citiesRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === "bottom-start"
+                          ? "left top"
+                          : "left bottom",
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleCloseCity}>
+                        <MenuList
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                        >
+                          {cities.map((name, id) => {
+                            return (
+                              <MenuItem key={id} onClick={handleCloseCity}>
+                                <Link to={`/city/${name}`}>{name}</Link>
+                              </MenuItem>
+                            );
+                          })}
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </Stack>
+
             {checkAuth() ? (
               <Stack direction="row" spacing={2}>
                 <div
-                  ref={anchorRef}
+                  ref={profileRef}
                   id="composition-button"
                   aria-controls={openDropdown ? "composition-menu" : undefined}
                   aria-expanded={openDropdown ? "true" : undefined}
                   aria-haspopup="true"
-                  onClick={handleToggle}
+                  onClick={handleToggleProfile}
                 >
-                  
                   <i className="text-3xl cursor-pointer mt-1 mr-2 fa-solid fa-circle-user"></i>
                 </div>
                 <Popper
-                  openDropdown={openDropdown}
-                  anchorEl={anchorRef.current}
+                  open={openDropdown}
+                  anchorEl={profileRef.current}
                   role={undefined}
                   placement="bottom-start"
                   transition
@@ -110,12 +191,12 @@ export default function Navbar({ mode, onSwitchChange }) {
                       }}
                     >
                       <Paper>
-                        <ClickAwayListener onClickAway={handleClose}>
+                        <ClickAwayListener onClickAway={handleCloseProfile}>
                           <MenuList
                             id="composition-menu"
                             aria-labelledby="composition-button"
                           >
-                            <MenuItem onClick={handleClose}>
+                            <MenuItem onClick={handleCloseProfile}>
                               <Link to={"/profile"}>Profile</Link>
                             </MenuItem>
                             <MenuItem onClick={(e) => handleLogout(e)}>
@@ -161,17 +242,36 @@ export default function Navbar({ mode, onSwitchChange }) {
           unfolded ? "block" : "hidden"
         } flex z-[49] flex-col items-center`}
       >
+        <p
+          onClick={() => setCityDropdown(!cityDropdown)}
+          className="cursor-pointer"
+        >
+          Our cities <i className={`fa-solid ${cityDropdown ? 'fa-caret-up' : 'fa-caret-down'} `}></i>
+        </p>
+        <div className={`${cityDropdown ? "block" : "hidden"}`}>
+          {cities.map((name, id) => {
+            return (
+              <div key={id} className="flex justify-center">
+                <Link onClick={() => setUnfolded(false)} to={`/city/${name}`}>
+                  {name}
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+
         {checkAuth() ? (
           <>
-            <Link to={"/profile"}>Profile</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/profile"}>Profile</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/property/new"}>Add your property</Link>
             <Link onClick={(e) => handleLogout(e)}>Log Out</Link>
           </>
         ) : (
           <>
-            <Link className="my-2" to={"/login"}>
+            <Link className="my-2" onClick={() => setUnfolded(false)} to={"/login"}>
               Sign In
             </Link>
-            <Link to={"/register"}>Sign Up</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/register"}>Sign Up</Link>
           </>
         )}
       </div>
