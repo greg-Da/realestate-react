@@ -80,7 +80,7 @@ export default function Navbar({ mode, onSwitchChange }) {
   }, [openDropdown]);
 
   return (
-    <nav className="absolute z-50 top-0 w-full min-h-[5vh] bg-black text-white p-2 shadow-lg border-b-2 border-black">
+    <nav className="absolute z-50 top-0 w-full min-h-[7vh] bg-black text-white p-2 shadow-lg border-b-2 border-black">
       <div className="flex justify-between">
         <div>
           <Link className="font-bold text-3xl" to={"/"}>
@@ -258,9 +258,10 @@ export default function Navbar({ mode, onSwitchChange }) {
           })}
         </div>
 
-        {checkAuth() ? (
+        {true ? (
           <>
             <Link to={"/profile"}>Profile</Link>
+            <Link to={"/property/new"}>Add your property</Link>
             <Link onClick={(e) => handleLogout(e)}>Log Out</Link>
           </>
         ) : (

@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { logIn } from "./state/auth/authSlice";
 import PropertiesShow from "./pages/Property/Show";
+import PropertyNew from "./pages/Property/New";
 
 function App() {
   const [lightMode, setLightMode] = useState(
@@ -55,13 +56,14 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
-      <main id="main" className="min-h-[90vh] flex">
+      <main id="main" className="min-h-[88vh] mt-[7vh] flex">
         <AlertProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/properties/:id" element={<PropertiesShow />} />
+            <Route path="/property/new" element={<PropertyNew />} />
             <Route
               path="/profile"
               element={
