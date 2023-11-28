@@ -55,7 +55,7 @@ export default function Login() {
   }
 
   return (
-    <div className="absolute flex w-full h-full bg-gray-400/25">
+    <div className="absolute flex w-full h-full bg-gray-300">
       <div className="m-auto w-5/6 md:w-4/6">
         <Card className="p-6">
           <h1 className="text-center mb-5 font-bold text-3xl">Login</h1>
