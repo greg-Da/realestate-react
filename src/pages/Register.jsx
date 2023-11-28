@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Button, Card, TextField } from "@mui/material";
+import { Button, Card } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -56,41 +56,52 @@ export default function Register() {
   }
 
   return (
-    <div className="m-auto w-4/6">
-      <Card className="p-10">
-        <h1 className="text-center mb-5 font-bold text-3xl">Register</h1>
-        <form className="grid gap-y-5">
-          <TextField
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Enter your email"
-          />
-          <TextField
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Enter your password"
-          />
-          <TextField
-            value={password_confirmation}
-            onChange={(e) => setPassword_confirmation(e.target.value)}
-            type="password"
-            placeholder="Enter your password confirmation"
-          />
-          <div className="flex justify-center">
-            <Button onClick={() => handleSubmit()} variant="contained">
-              Register
-            </Button>
-          </div>
-        </form>
-        <small className="mt-5">
-          Already have an account?{" "}
-          <Link className="underline" to={"/login"}>
-            Login
-          </Link>
-        </small>
-      </Card>
+    <div className="absolute flex w-full h-full bg-gray-400/25">
+      <div className="m-auto w-5/6 md:w-4/6">
+        <Card className="p-6">
+          <h1 className="text-center mb-5 font-bold text-3xl">Register</h1>
+          <form className="grid gap-y-5">
+            <input
+              className="rounded-full border p-2 outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Enter your email"
+            />
+            <input
+              className="rounded-full border p-2 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Enter your password"
+            />
+            <input
+              className="rounded-full border p-2 outline-none"
+              value={password_confirmation}
+              onChange={(e) => setPassword_confirmation(e.target.value)}
+              type="password"
+              placeholder="Enter your password confirmation"
+            />
+            <div className="flex justify-center">
+              <Button
+                disabled={`${
+                  email && password && password_confirmation ? "" : "disabled"
+                }`}
+                onClick={() => handleSubmit()}
+                variant="contained"
+              >
+                Register
+              </Button>
+            </div>
+          </form>
+          <small className="mt-5">
+            Already have an account?{" "}
+            <Link className="underline" to={"/login"}>
+              Login
+            </Link>
+          </small>
+        </Card>
+      </div>
     </div>
   );
 }
