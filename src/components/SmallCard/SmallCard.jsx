@@ -1,4 +1,4 @@
-import "./style.css";
+import "./SmallCard.css";
 import { Link } from "react-router-dom";
 
 export default function SmallCard({
