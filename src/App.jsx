@@ -58,7 +58,8 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
-      <main id="main" className="min-h-[90vh] relative flex">
+
+      <main id="main" className="min-h-[88vh] mt-[7vh] flex">
         <AlertProvider>
           <Routes>
             <Route path="/" element={<Home />} />
