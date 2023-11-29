@@ -7,7 +7,7 @@ export default function New() {
   const [images, setImages] = useState([]);
   const [renting, setRenting] = useState(false);
   const [basement, setBasement] = useState(false);
-  const [terrasse, setTerrasse] = useState(false);
+  const [terrace, setTerrace] = useState(false);
   const [furnished, setFurnished] = useState(false);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -160,10 +160,10 @@ export default function New() {
             <input
               type="checkbox"
               className="mr-3 w-4 h-4"
-              checked={terrasse}
-              onChange={() => setTerrasse(!terrasse)}
+              checked={terrace}
+              onChange={() => setTerrace(!terrace)}
             />
-            Terrasse
+            Terrace
           </label>
 
           <label>
