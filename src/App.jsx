@@ -55,13 +55,12 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
-      <main id="main" className="min-h-[90vh] relative flex">
+      <main id="main" className="min-h-[88vh] mt-[7vh] relative flex">
         <AlertProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/properties/:id" element={<PropertiesShow />} />
             <Route
               path="/profile"
               element={
@@ -70,6 +69,16 @@ function App() {
                 </PrivateRoute>
               }
             />
+
+            <Route path="/properties/:id" element={<PropertiesShow />} />
+            {/* <Route
+              path="//properties/:id"
+              element={
+                <PrivateRoute>
+                  <PropertiesShow />
+                </PrivateRoute>
+              }
+            /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AlertProvider>
