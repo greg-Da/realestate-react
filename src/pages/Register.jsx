@@ -12,9 +12,9 @@ export default function Register() {
   const [firstName, setFirstName] = useState("greg");
   const [lastName, setLastName] = useState("da");
   const [email, setEmail] = useState("test@example.fr");
-  const [password, setPassword] = useState("qwerty1234");
+  const [password, setPassword] = useState("!Qwerty1234");
   const [password_confirmation, setPassword_confirmation] =
-    useState("qwerty1234");
+    useState("!Qwerty1234");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
@@ -30,7 +30,7 @@ export default function Register() {
         password_confirmation,
       },
     };
-    fetch("http://localhost:3000/signup", {
+    fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

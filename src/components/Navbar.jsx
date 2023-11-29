@@ -64,8 +64,8 @@ export default function Navbar({ mode, onSwitchChange }) {
 
   const handleLogout = async (e) => {
     await handleCloseProfile(e);
-    setUnfolded(false)
-    
+    setUnfolded(false);
+
     dispatch(logOut());
 
     navigate("/");
@@ -148,7 +148,9 @@ export default function Navbar({ mode, onSwitchChange }) {
                           {cities.map((name, id) => {
                             return (
                               <MenuItem key={id} onClick={handleCloseCity}>
-                                <Link to={`/properties/search//${name}`}>{name}</Link>
+                                <Link to={`/properties/search/${name}`}>
+                                  {name}
+                                </Link>
                               </MenuItem>
                             );
                           })}
@@ -196,6 +198,14 @@ export default function Navbar({ mode, onSwitchChange }) {
                             id="composition-menu"
                             aria-labelledby="composition-button"
                           >
+                            <MenuItem onClick={handleCloseProfile}>
+                              <Link
+                                onClick={handleCloseProfile}
+                                to={"/property/new"}
+                              >
+                                Add your property
+                              </Link>
+                            </MenuItem>
                             <MenuItem onClick={handleCloseProfile}>
                               <Link to={"/profile"}>Profile</Link>
                             </MenuItem>
@@ -246,7 +256,12 @@ export default function Navbar({ mode, onSwitchChange }) {
           onClick={() => setCityDropdown(!cityDropdown)}
           className="cursor-pointer"
         >
-          Our cities <i className={`fa-solid ${cityDropdown ? 'fa-caret-up' : 'fa-caret-down'} `}></i>
+          Our cities{" "}
+          <i
+            className={`fa-solid ${
+              cityDropdown ? "fa-caret-up" : "fa-caret-down"
+            } `}
+          ></i>
         </p>
         <div className={`${cityDropdown ? "block" : "hidden"}`}>
           {cities.map((name, id) => {
@@ -262,16 +277,26 @@ export default function Navbar({ mode, onSwitchChange }) {
 
         {checkAuth() ? (
           <>
-            <Link onClick={() => setUnfolded(false)} to={"/profile"}>Profile</Link>
-            <Link onClick={() => setUnfolded(false)} to={"/property/new"}>Add your property</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/profile"}>
+              Profile
+            </Link>
+            <Link onClick={() => setUnfolded(false)} to={"/property/new"}>
+              Add your property
+            </Link>
             <Link onClick={(e) => handleLogout(e)}>Log Out</Link>
           </>
         ) : (
           <>
-            <Link className="my-2" onClick={() => setUnfolded(false)} to={"/login"}>
+            <Link
+              className="my-2"
+              onClick={() => setUnfolded(false)}
+              to={"/login"}
+            >
               Sign In
             </Link>
-            <Link onClick={() => setUnfolded(false)} to={"/register"}>Sign Up</Link>
+            <Link onClick={() => setUnfolded(false)} to={"/register"}>
+              Sign Up
+            </Link>
           </>
         )}
       </div>
