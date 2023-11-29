@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { logIn } from "../state/auth/authSlice";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@example.fr");
+  const [password, setPassword] = useState("qwerty1234");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
@@ -20,10 +20,10 @@ export default function Login() {
     const data = {
       user: {
         email,
-        password,
+        password
       },
     };
-    fetch("http://localhost:3000/users/sign_in", {
+    fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,15 +31,17 @@ export default function Login() {
       body: JSON.stringify(data),
     })
       .then((res) => {
+        const data = res.json();
+        console.log(res);
+        console.log(data);
         if (res.ok) {
-          const data = res.json();
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
           return data;
         } else {
-          throw new Error("Something went wrong");
+          throw { error: new Error("Something went wrong"), data: data };
         }
       })
       .then((data) => {
@@ -51,8 +53,9 @@ export default function Login() {
       })
       .catch((err) => {
         console.error(err);
-        console.error(err.response);
-        setAlert({ text: err.message, type: "error" });
+        console.error(err.error);
+        console.error(err.data);
+        setAlert({ text: err.error.message, type: "error" });
       });
   }
 
@@ -77,9 +80,9 @@ export default function Login() {
               placeholder="Enter your password"
             />
             <div className="flex justify-center">
-              <Button disabled={`${
-                  email && password ? "" : "disabled"
-                }`} onClick={() => handleSubmit()} variant="contained">
+              <Button disabled={
+                  email && password ? false : true
+                } onClick={() => handleSubmit()} variant="contained">
                 Login
               </Button>
             </div>

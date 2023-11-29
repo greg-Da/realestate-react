@@ -34,13 +34,10 @@ function App() {
         },
       })
         .then((response) => {
-          console.log(response);
-
           return response.json();
         })
         .then((data) => {
-
-          dispatch(logIn(data.user));
+          dispatch(logIn(data.data));
         })
         .catch((err) => {
           console.error(err);
@@ -59,7 +56,7 @@ function App() {
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
 
-      <main id="main" className="min-h-[88vh] mt-[7vh] flex">
+      <main id="main" className="min-h-[88vh] mt-[7.5vh] flex">
         <AlertProvider>
           <Routes>
             <Route path="/" element={<Home />} />

@@ -31,7 +31,7 @@ export default function AlertBox() {
     }, 15000);
   }
   return (
-    <div className="z-20 absolute w-full">
+    <div className="z-20 mt-2 absolute w-full">
       <Collapse className="max-w-md md:max-w-lg m-auto" in={alert !== null}>
         <Alert
           severity={alert.type}

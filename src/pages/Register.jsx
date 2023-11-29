@@ -30,7 +30,7 @@ export default function Register() {
         password_confirmation,
       },
     };
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function Register() {
       })
       .then((data) => {
         setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.user));
+        dispatch(logIn(data.data));
         navigate("/");
       })
       .catch((err) => {
@@ -107,15 +107,15 @@ export default function Register() {
             />
             <div className="flex justify-center">
               <Button
-                disabled={`${
+                disabled={
                   email &&
                   password &&
                   password_confirmation &&
                   firstName &&
                   lastName
-                    ? ""
-                    : "disabled"
-                }`}
+                    ? false
+                    : true
+                }
                 onClick={() => handleSubmit()}
                 variant="contained"
               >
