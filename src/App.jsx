@@ -61,6 +61,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/properties/:id" element={<PropertiesShow />} />
             <Route path="/properties/search/:city" element={<PropertiesSearch />} />
             <Route
