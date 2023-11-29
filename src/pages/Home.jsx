@@ -2,12 +2,11 @@ import Cta from "../assets/homeCta.jpg";
 import Searchbar from "../components/Searchbar";
 import SmallCard from "../components/SmallCard/SmallCard";
 
-import homeCta from "../assets/homeCta.jpg";
 
 export default function Home() {
   const data = {
     id: 1,
-    img: homeCta,
+    img: Cta,
     price: 150000,
     location: "Lagos, Nigeria Lagos, Nigeria Lagos, Nigeria Nigeria",
     name: "Lagos House",
