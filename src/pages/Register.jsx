@@ -9,11 +9,12 @@ import { AlertContext } from "../components/Alert";
 import { logIn } from "../state/auth/authSlice";
 
 export default function Register() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [firstName, setFirstName] = useState("greg");
+  const [lastName, setLastName] = useState("da");
+  const [email, setEmail] = useState("test@example.fr");
+  const [password, setPassword] = useState("qwerty1234");
+  const [password_confirmation, setPassword_confirmation] =
+    useState("qwerty1234");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
@@ -22,8 +23,8 @@ export default function Register() {
   function handleSubmit() {
     const data = {
       user: {
-        firstName,
-        lastName,
+        first_name: firstName,
+        last_name: lastName,
         email,
         password,
         password_confirmation,
@@ -37,15 +38,19 @@ export default function Register() {
       body: JSON.stringify(data),
     })
       .then((res) => {
+        const data = res.json();
+        console.log(data);
+
         if (res.ok) {
-          const data = res.json();
+          console.log(data);
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
           return data;
         } else {
-          throw new Error("Something went wrong");
+          console.log(data)
+          throw { error: new Error(''), status: data };
         }
       })
       .then((data) => {
@@ -55,7 +60,7 @@ export default function Register() {
       })
       .catch((err) => {
         console.error(err);
-        setAlert({ text: err.message, type: "error" });
+        // setAlert({ text: err.message, type: "error" });
       });
   }
 
@@ -103,7 +108,13 @@ export default function Register() {
             <div className="flex justify-center">
               <Button
                 disabled={`${
-                  email && password && password_confirmation && firstName && lastName ? "" : "disabled"
+                  email &&
+                  password &&
+                  password_confirmation &&
+                  firstName &&
+                  lastName
+                    ? ""
+                    : "disabled"
                 }`}
                 onClick={() => handleSubmit()}
                 variant="contained"

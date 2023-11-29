@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (!currentUser.id && token !== undefined) {
-      fetch("http://localhost:3000/member-data", {
+      fetch("http://localhost:3000/current_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -34,9 +34,12 @@ function App() {
         },
       })
         .then((response) => {
+          console.log(response);
+
           return response.json();
         })
         .then((data) => {
+
           dispatch(logIn(data.user));
         })
         .catch((err) => {

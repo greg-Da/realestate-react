@@ -43,8 +43,10 @@ export default function Login() {
         }
       })
       .then((data) => {
+        console.log(data);
+
         setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.user));
+        dispatch(logIn(data.data));
         navigate("/");
       })
       .catch((err) => {
