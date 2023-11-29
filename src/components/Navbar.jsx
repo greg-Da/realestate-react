@@ -148,7 +148,7 @@ export default function Navbar({ mode, onSwitchChange }) {
                           {cities.map((name, id) => {
                             return (
                               <MenuItem key={id} onClick={handleCloseCity}>
-                                <Link to={`/city/${name}`}>{name}</Link>
+                                <Link to={`/properties/search//${name}`}>{name}</Link>
                               </MenuItem>
                             );
                           })}
