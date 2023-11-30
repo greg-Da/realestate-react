@@ -23,7 +23,7 @@ export default function Login() {
         password,
       },
     };
-    fetch("http://localhost:3000/users/sign_in", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/users/sign_in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

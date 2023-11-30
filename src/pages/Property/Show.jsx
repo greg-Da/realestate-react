@@ -20,6 +20,7 @@ export default function Show() {
       images,
       number_of_rooms,
       number_of_bedrooms,
+      user_email
     },
     setData,
   ] = useState({});
@@ -28,7 +29,7 @@ export default function Show() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/properties/${id}`, {
+    fetch(`https://realestate-api-ec44019958c8.herokuapp.com/properties/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +94,7 @@ export default function Show() {
               {checkAuth() ? (
                 <>
                   <p className="mt-4 font-bold">Email :</p>
-                  <p className="ml-3">Example@gmail.com</p>
+                  <p className="ml-3">{user_email}</p>
                 </>
               ) : (
                 ""

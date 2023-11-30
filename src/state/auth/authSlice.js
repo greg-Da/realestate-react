@@ -18,7 +18,7 @@ const auth = createSlice({
     },
     logOut: (state) => {
       state.user = {};
-      fetch("http://localhost:3000/users/sign_out", {
+      fetch("https://realestate-api-ec44019958c8.herokuapp.com/users/sign_out", {
         method: "DELETE",
         headers: {
           Authorization: Cookies.get("token"),

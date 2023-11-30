@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import { AlertContext } from "../../components/Alert";
 import { useNavigate } from "react-router-dom";
 
-
 export default function New() {
   const [imagesDisplay, setImagesDisplay] = useState([]);
   const [images, setImages] = useState([]);
@@ -13,16 +12,15 @@ export default function New() {
   const [basement, setBasement] = useState(false);
   const [terrace, setTerrace] = useState(false);
   const [furnished, setFurnished] = useState(false);
-  const [address, setAddress] = useState("1 av de Paris");
-  const [city, setCity] = useState("Paris");
-  const [name, setName] = useState("House");
-  const [description, setDescription] = useState("lorem ipsum");
-  const [price, setPrice] = useState(1000);
-  const [surface, setSurface] = useState(90);
-  const [nmbRooms, setNmbRooms] = useState(3);
-  const [nmbBedrooms, setNmbBedrooms] = useState(3);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [surface, setSurface] = useState("");
+  const [nmbRooms, setNmbRooms] = useState("");
+  const [nmbBedrooms, setNmbBedrooms] = useState("");
 
-  
   const { setAlert } = useContext(AlertContext);
 
   const cities = [
@@ -41,7 +39,7 @@ export default function New() {
     const data = new FormData();
     images.forEach((image) => {
       data.append(`property[images][]`, image);
-    })
+    });
     data.append("property[renting]", renting);
     data.append("property[basement]", basement);
     data.append("property[terrace]", terrace);
@@ -49,13 +47,13 @@ export default function New() {
     data.append("property[location]", address);
     data.append("property[city]", city);
     data.append("property[description]", description);
-    data.append("property[price]", price);
+    data.append("property[price]", parseInt(price));
     data.append("property[area]", parseInt(surface));
     data.append("property[number_of_rooms]", parseInt(nmbRooms));
     data.append("property[number_of_bedrooms]", parseInt(nmbBedrooms));
     data.append("property[name]", name);
 
-    fetch("http://localhost:3000/properties", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties", {
       method: "POST",
       headers: {
         Authorization: Cookies.get("token"),
@@ -70,21 +68,21 @@ export default function New() {
           navigate(`/properties/${data.data.property.id}`);
         } else {
           const keys = Object.keys(data.status.errors);
-          let errorMessage = ''
+          let errorMessage = "";
           keys.forEach((key) => {
-            errorMessage += key + ' : ' 
+            errorMessage += key + " : ";
 
             data.status.errors[key].forEach((error) => {
-              errorMessage += error + ', '
-            })
-            errorMessage += '\n'
-          })
+              errorMessage += error + ", ";
+            });
+            errorMessage += "\n";
+          });
           throw new Error(errorMessage);
         }
       })
       .catch((err) => {
         console.log(err);
-        setAlert({ text: err.message, type: "error" })
+        setAlert({ text: err.message, type: "error" });
       });
   }
 
@@ -211,7 +209,7 @@ export default function New() {
         </div>
 
         <div className="mt-3">
-          <label htmlFor="nmbRooms">Number of Rooms :</label>
+          <label htmlFor="nmbRooms">Number of Bedrooms :</label>
           <input
             className="text-black w-full  rounded-full border p-2 outline-none"
             value={nmbBedrooms}

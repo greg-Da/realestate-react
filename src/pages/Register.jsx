@@ -29,7 +29,7 @@ export default function Register() {
         password_confirmation,
       },
     };
-    fetch("http://localhost:3000/users", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
