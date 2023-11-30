@@ -28,7 +28,7 @@ export default function Show() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`https://realestate-api-cool-water-8289.fly.dev/properties/${id}`, {
+    fetch(`https://realestate-api-ec44019958c8.herokuapp.com/properties/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (!currentUser.id && token !== undefined) {
-      fetch("https://realestate-api-cool-water-8289.fly.dev/current_user", {
+      fetch("https://realestate-api-ec44019958c8.herokuapp.com/current_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

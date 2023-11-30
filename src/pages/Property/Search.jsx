@@ -23,7 +23,7 @@ export default function Search() {
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    fetch(`https://realestate-api-cool-water-8289.fly.dev/properties/search/${city}`)
+    fetch(`https://realestate-api-ec44019958c8.herokuapp.com/properties/search/${city}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

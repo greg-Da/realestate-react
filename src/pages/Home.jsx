@@ -10,7 +10,7 @@ export default function Home() {
   const [selling, setSelling] = useState([]);
 
   useEffect(() => {
-    fetch("https://realestate-api-cool-water-8289.fly.dev/properties")
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties")
       .then((response) => response.json())
       .then((data) => {
         setRecentlyAdded(data.data);
@@ -19,7 +19,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("https://realestate-api-cool-water-8289.fly.dev/properties/type/renting")
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties/type/renting")
       .then((response) => response.json())
       .then((data) => {
         setRentals(data.data);
@@ -28,7 +28,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("https://realestate-api-cool-water-8289.fly.dev/properties/type/renting")
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties/type/renting")
       .then((response) => response.json())
       .then((data) => {
         setSelling(data.data);
@@ -37,9 +37,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="relative text-white">
-        <img src={Cta} />
+        <img style={{width: '-moz-available'}} src={Cta} />
         <h1 className="absolute md:text-3xl text-lg font-bold top-[35%] left-[7%]">
           Want to find your dream house?
         </h1>

@@ -53,7 +53,7 @@ export default function New() {
     data.append("property[number_of_bedrooms]", parseInt(nmbBedrooms));
     data.append("property[name]", name);
 
-    fetch("https://realestate-api-cool-water-8289.fly.dev/properties", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties", {
       method: "POST",
       headers: {
         Authorization: Cookies.get("token"),

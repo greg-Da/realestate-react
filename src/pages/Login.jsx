@@ -23,7 +23,7 @@ export default function Login() {
         password,
       },
     };
-    fetch("https://realestate-api-cool-water-8289.fly.dev/users/sign_in", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/users/sign_in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
