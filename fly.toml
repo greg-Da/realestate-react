@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for realestate-react-ancient-meadow-8900 on 2023-11-30T23:31:14+01:00
+# fly.toml app configuration file generated for realestate-react-ancient-meadow-8900-still-grass-1741 on 2023-12-01T00:03:31+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "realestate-react-ancient-meadow-8900"
+app = "realestate-react-ancient-meadow-8900-still-grass-1741"
 primary_region = "cdg"
 
 [build]
