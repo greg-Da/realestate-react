@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { logIn } from "./state/auth/authSlice";
 import PropertiesShow from "./pages/Property/Show";
+import PropertyNew from "./pages/Property/New";
 import PropertiesSearch from "./pages/Property/Search";
 
 function App() {
@@ -66,6 +67,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/properties/:id" element={<PropertiesShow />} />
             <Route path="/properties/search/:city" element={<PropertiesSearch />} />
+            <Route
+              path="/property/new"
+              element={
+                <PrivateRoute>
+                  <PropertyNew />
+                </PrivateRoute>
+              }
+            />
             <Route
               path="/profile"
               element={
