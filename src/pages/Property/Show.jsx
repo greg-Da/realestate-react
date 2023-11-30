@@ -28,7 +28,7 @@ export default function Show() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/properties/${id}`, {
+    fetch(`https://realestate-api-cool-water-8289.fly.dev/properties/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (!currentUser.id && token !== undefined) {
-      fetch("http://localhost:3000/current_user", {
+      fetch("https://realestate-api-cool-water-8289.fly.dev/current_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

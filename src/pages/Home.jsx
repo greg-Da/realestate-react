@@ -10,7 +10,7 @@ export default function Home() {
   const [selling, setSelling] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/properties")
+    fetch("https://realestate-api-cool-water-8289.fly.dev/properties")
       .then((response) => response.json())
       .then((data) => {
         setRecentlyAdded(data.data);
@@ -19,7 +19,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000//properties/type/renting")
+    fetch("https://realestate-api-cool-water-8289.fly.dev/properties/type/renting")
       .then((response) => response.json())
       .then((data) => {
         setRentals(data.data);
@@ -28,7 +28,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000//properties/type/renting")
+    fetch("https://realestate-api-cool-water-8289.fly.dev/properties/type/renting")
       .then((response) => response.json())
       .then((data) => {
         setSelling(data.data);

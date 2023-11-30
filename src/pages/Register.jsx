@@ -29,7 +29,7 @@ export default function Register() {
         password_confirmation,
       },
     };
-    fetch("http://localhost:3000/users", {
+    fetch("https://realestate-api-cool-water-8289.fly.dev/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
