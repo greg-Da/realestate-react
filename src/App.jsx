@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { AlertProvider } from "./components/Alert";
@@ -63,7 +62,7 @@ function App() {
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
 
-      <main id="main" className="min-h-[88vh] mt-[7.5vh] relative flex">
+      <main id="main" className="min-h-[88vh] mt-[7vh] relative flex">
         <AlertProvider>
           <Routes>
             <Route path="/" element={<Home />} />
