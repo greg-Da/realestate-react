@@ -206,9 +206,6 @@ export default function Navbar({ mode, onSwitchChange }) {
                                 Add your property
                               </Link>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseProfile}>
-                              <Link to={"/profile"}>Profile</Link>
-                            </MenuItem>
                             <MenuItem onClick={(e) => handleLogout(e)}>
                               Logout
                             </MenuItem>
@@ -277,9 +274,6 @@ export default function Navbar({ mode, onSwitchChange }) {
 
         {checkAuth() ? (
           <>
-            <Link onClick={() => setUnfolded(false)} to={"/profile"}>
-              Profile
-            </Link>
             <Link onClick={() => setUnfolded(false)} to={"/property/new"}>
               Add your property
             </Link>

@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { logIn } from "../state/auth/authSlice";
 
 export default function Login() {
-  const [email, setEmail] = useState("test@example.fr");
-  const [password, setPassword] = useState("!Qwerty1234");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function Login() {
     const data = {
       user: {
         email,
-        password
+        password,
       },
     };
     fetch("http://localhost:3000/users/sign_in", {

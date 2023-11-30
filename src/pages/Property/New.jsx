@@ -40,7 +40,7 @@ export default function New() {
   function submitData() {
     const data = new FormData();
     images.forEach((image) => {
-      data.append("property[images]", image);
+      data.append(`property[images][]`, image);
     })
     data.append("property[renting]", renting);
     data.append("property[basement]", basement);
@@ -54,20 +54,20 @@ export default function New() {
     data.append("property[number_of_rooms]", parseInt(nmbRooms));
     data.append("property[number_of_bedrooms]", parseInt(nmbBedrooms));
     data.append("property[name]", name);
-    console.log('data', data);
+
     fetch("http://localhost:3000/properties", {
       method: "POST",
       headers: {
         Authorization: Cookies.get("token"),
       },
-      body: JSON.stringify(data),
+      body: data,
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.status.code === 200) {
+        if (data.status.code === 201) {
           setAlert({ text: "Property created successfully", type: "success" });
-          navigate(`/properties/${data.data.id}`);
+          navigate(`/properties/${data.data.property.id}`);
         } else {
           const keys = Object.keys(data.status.errors);
           let errorMessage = ''

@@ -17,6 +17,7 @@ export default function Show() {
       basement,
       renting,
       terrace,
+      images,
       number_of_rooms,
       number_of_bedrooms,
     },
@@ -39,9 +40,10 @@ export default function Show() {
       .then((data) => {
         console.log(data);
         setData(data);
-        // setSelectedImages(data.images[0])
+        setSelectedImages(data.images[0])
       });
   }, [id]);
+
 
   return (
     <div className="p-6 w-full">
@@ -50,9 +52,14 @@ export default function Show() {
       </div>
 
       <section>
-        <img src={selectedImage} alt="Property image" />
+        <img className="w-full " src={selectedImage} alt="Property image" />
 
-        <div></div>
+        <div className="flex my-5">
+          {images && 
+          images.map((image, id) => (
+            <img className="w-1/6 mr-2" key={id} src={image} alt="Property image" onClick={() => setSelectedImages(image)} />
+          ))}
+        </div>
 
         <div className="w-full">
           <div className="flex justify-between">

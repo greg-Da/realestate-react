@@ -7,7 +7,7 @@ export default function Searchbar({value = ''}) {
 
   function handleKey(e){
     if (e.key === 'Enter'){
-      navigate(`properties/search/${search}`)
+      navigate(`/properties/search/${search}`)
     }
   }
 

@@ -79,24 +79,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
-
             <Route path="/properties/:id" element={<PropertiesShow />} />
-            {/* <Route
-              path="//properties/:id"
-              element={
-                <PrivateRoute>
-                  <PropertiesShow />
-                </PrivateRoute>
-              }
-            /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AlertProvider>

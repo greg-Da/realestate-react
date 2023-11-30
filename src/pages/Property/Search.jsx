@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import FilterSearch from "../../components/FilterSearch";
 import BigCard from "../../components/BigCard/BigCard";
 
-import Cta from "../../assets/homeCta.jpg";
-
 export default function Search() {
   const { city } = useParams();
 
@@ -29,8 +27,8 @@ export default function Search() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setData(data);
-        setFilteredData(data);
+        setData(data.data);
+        setFilteredData(data.data);
       });
   }, [city]);
 
