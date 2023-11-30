@@ -21,21 +21,78 @@ export default function Search() {
     basement: false,
     terrace: false,
   });
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const data = [
-    {
-      id: 1,
-      img: Cta,
-      price: 150000,
-      location: "Lagos, Nigeria Lagos, Nigeria Lagos, Nigeria Nigeria",
-      name: "Lagos House",
-      number_of_rooms: 6,
-      renting: true,
-      area: 90,
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod. Quisquam, quod",
-    },
-  ];
+  useEffect(() => {
+    fetch(`http://localhost:3000/properties/search/${city}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+        setFilteredData(data);
+      });
+  }, [city]);
+
+  useEffect(() => {
+    let filtered = data;
+
+    if (filters.minPrice !== "") {
+      filtered = filtered.filter(
+        (item) => item.price >= parseInt(filters.minPrice)
+      );
+    }
+
+    if (filters.maxPrice !== "") {
+      filtered = filtered.filter(
+        (item) => item.price <= parseInt(filters.maxPrice)
+      );
+    }
+
+    if (filters.minSurface !== "") {
+      filtered = filtered.filter(
+        (item) => item.area >= parseInt(filters.minSurface)
+      );
+    }
+
+    if (filters.maxSurface !== "") {
+      filtered = filtered.filter(
+        (item) => item.area <= parseInt(filters.maxSurface)
+      );
+    }
+
+    if (filters.nmbBedroom !== "") {
+      filtered = filtered.filter(
+        (item) => item.number_of_bedrooms >= parseInt(filters.nmbBedroom)
+      );
+    }
+
+    if (filters.nmbRoom !== "") {
+      filtered = filtered.filter(
+        (item) => item.number_of_rooms >= parseInt(filters.nmbRoom)
+      );
+    }
+
+    if (filters.furnished !== "") {
+      const bool = filters.furnished === "true";
+      filtered = filtered.filter((item) => item.furnished === bool);
+    }
+
+    if (filters.renting !== "") {
+      const bool = filters.renting === "true";
+      filtered = filtered.filter((item) => item.renting === bool);
+    }
+
+    if (filters.basement === true) {
+      filtered = filtered.filter((item) => item.basement === true);
+    }
+
+    if (filters.terrace === true) {
+      filtered = filtered.filter((item) => item.terrace === true);
+    }
+
+    setFilteredData(filtered);
+  }, [filters, data]);
 
   function handleFilterChange(value, key) {
     setFilters((prev) => ({
@@ -43,11 +100,6 @@ export default function Search() {
       [key]: value,
     }));
   }
-
-  useEffect(() => {
-    console.log(filters);
-    // IMPLEMENT SEARCH DATA
-  }, [filters]);
 
   return (
     <div className="p-6 w-full">
@@ -58,7 +110,7 @@ export default function Search() {
       <FilterSearch filters={filters} setFilters={handleFilterChange} />
 
       <div>
-        {data.map((item) => (
+        {filteredData.map((item) => (
           <div className="mt-5" key={item.id}>
             <BigCard data={item} />
           </div>

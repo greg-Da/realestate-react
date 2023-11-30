@@ -36,14 +36,18 @@ function App() {
         },
       })
         .then((response) => {
-          return response.json();
+          if(response.ok){
+            return response.json();
+          }else{
+            throw new Error("Something went wrong");
+          }
         })
         .then((data) => {
-          console.log(data)
           dispatch(logIn(data));
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err.message);
+          Cookies.remove("token");
         });
     }
   }, [currentUser, dispatch]);

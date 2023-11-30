@@ -1,11 +1,13 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 export default function Searchbar({value = ''}) {
 
   const [search, setSearch] = useState(value)
+  let navigate = useNavigate()
 
   function handleKey(e){
     if (e.key === 'Enter'){
-      console.log(search)
+      navigate(`properties/search/${search}`)
     }
   }
 

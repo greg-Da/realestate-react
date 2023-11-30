@@ -1,7 +1,6 @@
 import "./Switch.css";
 
 export default function Switch({handleChange, value}) {
-    console.log(value)
   return (
     <div className="flex">
       <label className="switch">

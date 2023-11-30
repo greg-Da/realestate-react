@@ -10,7 +10,7 @@ import { logIn } from "../state/auth/authSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("test@example.fr");
-  const [password, setPassword] = useState("qwerty1234");
+  const [password, setPassword] = useState("!Qwerty1234");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
