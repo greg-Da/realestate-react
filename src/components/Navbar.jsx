@@ -65,7 +65,6 @@ export default function Navbar({ mode, onSwitchChange }) {
   const handleLogout = async (e) => {
     await handleCloseProfile(e);
     setUnfolded(false);
-
     dispatch(logOut());
 
     navigate("/");
