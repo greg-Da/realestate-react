@@ -1,5 +1,8 @@
 # Boilerplate REACT + VITE
 
+## Live version
+https://realestate-react-ancient-meadow-8900-still-grass-1741.fly.dev/
+
 ## Install
 
 -pnpm i

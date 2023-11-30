@@ -22,14 +22,14 @@ export default function Register() {
   function handleSubmit() {
     const data = {
       user: {
-        firstName,
-        lastName,
+        first_name: firstName,
+        last_name: lastName,
         email,
         password,
         password_confirmation,
       },
     };
-    fetch("http://localhost:3000/users", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,24 +37,27 @@ export default function Register() {
       body: JSON.stringify(data),
     })
       .then((res) => {
+        const data = res.json();
+
         if (res.ok) {
-          const data = res.json();
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
-          return data;
-        } else {
-          throw new Error("Something went wrong");
         }
+        return data;
       })
       .then((data) => {
-        setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.user));
-        navigate("/");
+        console.log(data)
+        if (data.status.code === 200) {
+          setAlert({ text: "Registered successfully", type: "success" });
+          dispatch(logIn(data.data));
+          navigate("/");
+        } else {
+          throw new Error(data.status.message);
+        }
       })
       .catch((err) => {
-        console.error(err);
         setAlert({ text: err.message, type: "error" });
       });
   }
@@ -102,9 +105,15 @@ export default function Register() {
             />
             <div className="flex justify-center">
               <Button
-                disabled={`${
-                  email && password && password_confirmation && firstName && lastName ? "" : "disabled"
-                }`}
+                disabled={
+                  email &&
+                  password &&
+                  password_confirmation &&
+                  firstName &&
+                  lastName
+                    ? false
+                    : true
+                }
                 onClick={() => handleSubmit()}
                 variant="contained"
               >

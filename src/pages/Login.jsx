@@ -23,7 +23,7 @@ export default function Login() {
         password,
       },
     };
-    fetch("http://localhost:3000/users/sign_in", {
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/users/sign_in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,25 +31,27 @@ export default function Login() {
       body: JSON.stringify(data),
     })
       .then((res) => {
+        const data = res.json();
+        console.log(data);
         if (res.ok) {
-          const data = res.json();
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
-          return data;
+        }
+        return data;
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.status.code === 200) {
+          setAlert({ text: "Registered successfully", type: "success" });
+          dispatch(logIn(result.data));
+          navigate("/");
         } else {
-          throw new Error("Something went wrong");
+          throw new Error(result.status.message);
         }
       })
-      .then((data) => {
-        setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.user));
-        navigate("/");
-      })
       .catch((err) => {
-        console.error(err);
-        console.error(err.response);
         setAlert({ text: err.message, type: "error" });
       });
   }
@@ -75,9 +77,11 @@ export default function Login() {
               placeholder="Enter your password"
             />
             <div className="flex justify-center">
-              <Button disabled={`${
-                  email && password ? "" : "disabled"
-                }`} onClick={() => handleSubmit()} variant="contained">
+              <Button
+                disabled={email && password ? false : true}
+                onClick={() => handleSubmit()}
+                variant="contained"
+              >
                 Login
               </Button>
             </div>

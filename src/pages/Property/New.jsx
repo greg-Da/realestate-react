@@ -1,9 +1,12 @@
-import { useState } from "react";
-import Switch from "../../components/atoms/Switch/Switch";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Switch from "../../components/atoms/Switch/Switch/Switch";
 import FileInput from "../../components/atoms/Switch/FileInput";
+import Cookies from "js-cookie";
+import { AlertContext } from "../../components/Alert";
+import { useNavigate } from "react-router-dom";
 
 export default function New() {
+  const [imagesDisplay, setImagesDisplay] = useState([]);
   const [images, setImages] = useState([]);
   const [renting, setRenting] = useState(false);
   const [basement, setBasement] = useState(false);
@@ -11,11 +14,14 @@ export default function New() {
   const [furnished, setFurnished] = useState(false);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [surface, setSurface] = useState(0);
-  const [nmbRooms, setNmbRooms] = useState(0);
-  const [nmbBedrooms, setNmbBedrooms] = useState(0);
+  const [price, setPrice] = useState("");
+  const [surface, setSurface] = useState("");
+  const [nmbRooms, setNmbRooms] = useState("");
+  const [nmbBedrooms, setNmbBedrooms] = useState("");
+
+  const { setAlert } = useContext(AlertContext);
 
   const cities = [
     "Paris",
@@ -27,6 +33,59 @@ export default function New() {
     "Lyon",
   ];
 
+  let navigate = useNavigate();
+
+  function submitData() {
+    const data = new FormData();
+    images.forEach((image) => {
+      data.append(`property[images][]`, image);
+    });
+    data.append("property[renting]", renting);
+    data.append("property[basement]", basement);
+    data.append("property[terrace]", terrace);
+    data.append("property[furnished]", furnished);
+    data.append("property[location]", address);
+    data.append("property[city]", city);
+    data.append("property[description]", description);
+    data.append("property[price]", parseInt(price));
+    data.append("property[area]", parseInt(surface));
+    data.append("property[number_of_rooms]", parseInt(nmbRooms));
+    data.append("property[number_of_bedrooms]", parseInt(nmbBedrooms));
+    data.append("property[name]", name);
+
+    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties", {
+      method: "POST",
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status.code === 201) {
+          setAlert({ text: "Property created successfully", type: "success" });
+          navigate(`/properties/${data.data.property.id}`);
+        } else {
+          const keys = Object.keys(data.status.errors);
+          let errorMessage = "";
+          keys.forEach((key) => {
+            errorMessage += key + " : ";
+
+            data.status.errors[key].forEach((error) => {
+              errorMessage += error + ", ";
+            });
+            errorMessage += "\n";
+          });
+          throw new Error(errorMessage);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setAlert({ text: err.message, type: "error" });
+      });
+  }
+
   useEffect(() => {
     console.log(images);
   }, [images]);
@@ -36,7 +95,11 @@ export default function New() {
   }
 
   function handleFileUpload(e) {
-    setImages((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
+    setImagesDisplay((prev) => [
+      ...prev,
+      URL.createObjectURL(e.target.files[0]),
+    ]);
+    setImages((prev) => [...prev, e.target.files[0]]);
   }
 
   return (
@@ -44,7 +107,7 @@ export default function New() {
       <h1 className="font-bold text-3xl text-center">Add your property</h1>
 
       <div className="my-5 grid grid-cols-2 md:grid-cols-5 gap-4">
-        {images.map((image, index) => (
+        {imagesDisplay.map((image, index) => (
           <img className="w-auto h-auto " key={index} src={image} />
         ))}
         {images.length < 5 ? <FileInput uploadFile={handleFileUpload} /> : ""}
@@ -52,6 +115,18 @@ export default function New() {
 
       <div>
         <Switch value={renting} handleChange={handleChange} />
+
+        <div className="mt-3">
+          <label htmlFor="address">Name of the property :</label>
+          <input
+            className="text-black w-full rounded-full border p-2 outline-none"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            name="name"
+            placeholder="Name of the property"
+          />
+        </div>
 
         <div className="mt-3">
           <label htmlFor="address">Address :</label>
@@ -134,7 +209,7 @@ export default function New() {
         </div>
 
         <div className="mt-3">
-          <label htmlFor="nmbRooms">Number of Rooms :</label>
+          <label htmlFor="nmbRooms">Number of Bedrooms :</label>
           <input
             className="text-black w-full  rounded-full border p-2 outline-none"
             value={nmbBedrooms}
@@ -180,6 +255,7 @@ export default function New() {
 
       <div className="w-full flex justify-center mt-5">
         <button
+          onClick={() => submitData()}
           disabled={`${address && description && city ? "" : "disabled"}`}
           className={`px-2 py-1 md:px-4 md:py-2 ${
             address && description && city
