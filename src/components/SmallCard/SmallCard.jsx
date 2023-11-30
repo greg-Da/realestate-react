@@ -2,15 +2,15 @@ import "./SmallCard.css";
 import { Link } from "react-router-dom";
 
 export default function SmallCard({
-  data: { id, img, price, location, name, number_of_rooms, renting, area },
+  data: { id, image, price, location, name, number_of_rooms, renting, area },
 }) {
-  console.log(price);
-
   return (
     <div className="border border-black overflow-hidden rounded-xl">
-      <Link to={`/properties/${id}`}>
-        <img src={img} alt={`Picture of ${location}`} />
-      </Link>
+      <div className="flex justify-center">
+        <Link to={`/properties/${id}`}>
+          <img className="h-44 w-80" src={image} alt={`Picture of ${location}`} />
+        </Link>
+      </div>
 
       <div className="py-1 px-2">
         <div className="flex justify-between">
@@ -23,7 +23,7 @@ export default function SmallCard({
         <div className="flex">
           <div className="w-3/4">
             <div className="flex">
-              <p className="w-3/4 clamp-2">
+              <p className="w-3/4 md:w-2/3 clamp-2">
                 <i className="fa-solid fa-location-dot"></i> {location}
               </p>
               <p>
@@ -32,7 +32,7 @@ export default function SmallCard({
             </div>
 
             <div className="flex">
-              <p className="w-3/4">
+              <p className="w-3/4 md:w-2/3">
                 <i className="fa-solid fa-maximize"></i> {area} m2
               </p>
               <p>

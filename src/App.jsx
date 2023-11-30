@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { AlertProvider } from "./components/Alert";
@@ -28,7 +27,7 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (!currentUser.id && token !== undefined) {
-      fetch("http://localhost:3000/member-data", {
+      fetch("http://localhost:3000/current_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,13 +35,18 @@ function App() {
         },
       })
         .then((response) => {
-          return response.json();
+          if(response.ok){
+            return response.json();
+          }else{
+            throw new Error("Something went wrong");
+          }
         })
         .then((data) => {
-          dispatch(logIn(data.user));
+          dispatch(logIn(data));
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err.message);
+          Cookies.remove("token");
         });
     }
   }, [currentUser, dispatch]);
@@ -57,6 +61,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar mode={lightMode} onSwitchChange={setLightMode} />
+
       <main id="main" className="min-h-[88vh] mt-[7vh] relative flex">
         <AlertProvider>
           <Routes>
@@ -73,24 +78,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
-
             <Route path="/properties/:id" element={<PropertiesShow />} />
-            {/* <Route
-              path="//properties/:id"
-              element={
-                <PrivateRoute>
-                  <PropertiesShow />
-                </PrivateRoute>
-              }
-            /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AlertProvider>

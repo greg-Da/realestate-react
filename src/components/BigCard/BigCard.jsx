@@ -2,14 +2,14 @@ import "./BigCard.css";
 import { Link } from "react-router-dom";
 
 export default function BigCard({
-  data: { id, img, price, location, name, number_of_rooms, renting, area, description },
+  data: { id, image, price, location, name, number_of_rooms, renting, area, description },
 }) {
 
   return (
     <div className="border border-black overflow-hidden rounded-xl md:flex">
       
       <Link className="w-[45%]" to={`/properties/${id}`}>
-        <img src={img} alt={`Picture of ${location}`} />
+        <img src={image} alt={`Picture of ${location}`} />
       </Link>
 
       <div className="py-1 px-2 md:w-full">

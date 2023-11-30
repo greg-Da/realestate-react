@@ -74,7 +74,7 @@ export default function FilterSearch({filters, setFilters}) {
 
         <div className="flex flex-wrap md:mt-5 justify-between">
           <div className="w-full mt-5 md:mt-0 md:w-1/5">
-            <label>Nmb of Rooms :</label>
+            <label>Min nmb of Rooms :</label>
             <div className="flex justify-center items-center">
               <input
                 type="number"
@@ -92,7 +92,7 @@ export default function FilterSearch({filters, setFilters}) {
           </div>
 
           <div className="w-full mt-5 md:mt-0 md:w-1/5">
-            <label>Nmb of Bedrooms :</label>
+            <label>Min nmb of Bedrooms :</label>
             <div className="flex justify-center items-center">
               <input
                 type="number"
