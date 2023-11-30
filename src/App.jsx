@@ -38,7 +38,8 @@ function App() {
           return response.json();
         })
         .then((data) => {
-          dispatch(logIn(data.data));
+          console.log(data)
+          dispatch(logIn(data));
         })
         .catch((err) => {
           console.error(err);

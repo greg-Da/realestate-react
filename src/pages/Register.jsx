@@ -9,12 +9,11 @@ import { AlertContext } from "../components/Alert";
 import { logIn } from "../state/auth/authSlice";
 
 export default function Register() {
-  const [firstName, setFirstName] = useState("greg");
-  const [lastName, setLastName] = useState("da");
-  const [email, setEmail] = useState("test@example.fr");
-  const [password, setPassword] = useState("!Qwerty1234");
-  const [password_confirmation, setPassword_confirmation] =
-    useState("!Qwerty1234");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
   const { setAlert } = useContext(AlertContext);
 
   let dispatch = useDispatch();
@@ -39,28 +38,27 @@ export default function Register() {
     })
       .then((res) => {
         const data = res.json();
-        console.log(data);
 
         if (res.ok) {
-          console.log(data);
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
-          return data;
-        } else {
-          console.log(data)
-          throw { error: new Error(''), status: data };
         }
+        return data;
       })
       .then((data) => {
-        setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.data));
-        navigate("/");
+        console.log(data)
+        if (data.status.code === 200) {
+          setAlert({ text: "Registered successfully", type: "success" });
+          dispatch(logIn(data.data));
+          navigate("/");
+        } else {
+          throw new Error(data.status.message);
+        }
       })
       .catch((err) => {
-        console.error(err);
-        // setAlert({ text: err.message, type: "error" });
+        setAlert({ text: err.message, type: "error" });
       });
   }
 

@@ -32,30 +32,27 @@ export default function Login() {
     })
       .then((res) => {
         const data = res.json();
-        console.log(res);
         console.log(data);
         if (res.ok) {
           Cookies.set("token", res.headers.get("Authorization"), {
             expires: 2,
             sameSite: "strict",
           });
-          return data;
+        }
+        return data;
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.status.code === 200) {
+          setAlert({ text: "Registered successfully", type: "success" });
+          dispatch(logIn(result.data));
+          navigate("/");
         } else {
-          throw { error: new Error("Something went wrong"), data: data };
+          throw new Error(result.status.message);
         }
       })
-      .then((data) => {
-        console.log(data);
-
-        setAlert({ text: "Registered successfully", type: "success" });
-        dispatch(logIn(data.data));
-        navigate("/");
-      })
       .catch((err) => {
-        console.error(err);
-        console.error(err.error);
-        console.error(err.data);
-        setAlert({ text: err.error.message, type: "error" });
+        setAlert({ text: err.message, type: "error" });
       });
   }
 
@@ -80,9 +77,11 @@ export default function Login() {
               placeholder="Enter your password"
             />
             <div className="flex justify-center">
-              <Button disabled={
-                  email && password ? false : true
-                } onClick={() => handleSubmit()} variant="contained">
+              <Button
+                disabled={email && password ? false : true}
+                onClick={() => handleSubmit()}
+                variant="contained"
+              >
                 Login
               </Button>
             </div>
