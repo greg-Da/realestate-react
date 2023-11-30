@@ -8,7 +8,7 @@ export default function SmallCard({
     <div className="border border-black overflow-hidden rounded-xl">
       <div className="flex justify-center">
         <Link to={`/properties/${id}`}>
-          <img className="h-44 w-80" src={image} alt={`Picture of ${location}`} />
+          <img className="h-44 w-min" src={image} alt={`Picture of ${location}`} />
         </Link>
       </div>
 

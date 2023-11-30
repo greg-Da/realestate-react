@@ -19,7 +19,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties/type/renting")
+    fetch(
+      "https://realestate-api-ec44019958c8.herokuapp.com/properties/type/renting"
+    )
       .then((response) => response.json())
       .then((data) => {
         setRentals(data.data);
@@ -28,7 +30,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("https://realestate-api-ec44019958c8.herokuapp.com/properties/type/renting")
+    fetch(
+      "https://realestate-api-ec44019958c8.herokuapp.com/properties/type/selling"
+    )
       .then((response) => response.json())
       .then((data) => {
         setSelling(data.data);
@@ -39,7 +43,11 @@ export default function Home() {
   return (
     <div className="w-full">
       <div className="relative text-white">
-        <img style={{width: '-moz-available'}} src={Cta} />
+        <img
+          className="max-h-[80vh]"
+          style={{ width: "-moz-available" }}
+          src={Cta}
+        />
         <h1 className="absolute md:text-3xl text-lg font-bold top-[35%] left-[7%]">
           Want to find your dream house?
         </h1>
@@ -55,29 +63,34 @@ export default function Home() {
       </div>
 
       <div className="p-4">
-        <div>
-          <p className="mb-5 mt-12 font-bold text-2xl">Recently added</p>
-
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
-            {recentlyAdded.map((item) => (
-              <SmallCard key={item.id} data={item} />
-            ))}
+        <div className="flex flex-col items-center">
+          <div className="xl:w-3/4">
+            <p className="mb-5 mt-12 font-bold text-2xl">Recently added</p>
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+              {recentlyAdded.map((item) => (
+                <SmallCard key={item.id} data={item} />
+              ))}
+            </div>
           </div>
 
-          <p className="mb-5 mt-12 font-bold text-2xl">To rent</p>
+          <div className="xl:w-3/4">
+            <p className="mb-5 mt-12 font-bold text-2xl">To rent</p>
 
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
-            {rentals.map((item) => (
-              <SmallCard key={item.id} data={item} />
-            ))}
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+              {rentals.map((item) => (
+                <SmallCard key={item.id} data={item} />
+              ))}
+            </div>
           </div>
 
-          <p className="mb-5 mt-12 font-bold text-2xl">To sale</p>
+          <div className="xl:w-3/4">
+            <p className="mb-5 mt-12 font-bold text-2xl">To sale</p>
 
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
-            {selling.map((item) => (
-              <SmallCard key={item.id} data={item} />
-            ))}
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+              {selling.map((item) => (
+                <SmallCard key={item.id} data={item} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -209,7 +209,7 @@ export default function New() {
         </div>
 
         <div className="mt-3">
-          <label htmlFor="nmbRooms">Number of Rooms :</label>
+          <label htmlFor="nmbRooms">Number of Bedrooms :</label>
           <input
             className="text-black w-full  rounded-full border p-2 outline-none"
             value={nmbBedrooms}
